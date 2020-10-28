@@ -3,7 +3,7 @@ let buttonActivateGrayscale = document.getElementById('activateGrayscale');
 let buttonActivateHue = document.getElementById('activateHue');
 let buttonActivateDropshadow = document.getElementById('activateDropshadow');
 //fonction permettant d'exécuter le script blackandwhite.js en cliquant sur le bouton activer
-// Injection du code avec filtre à l'intérieur de tabs.executeScript
+//FILTRE GRIS
 buttonActivateGrayscale.addEventListener("click", function() {
       console.log('activateGrayscale');
       if (buttonActivateGrayscale.getAttribute("data-gris") == "true") {
@@ -13,31 +13,39 @@ buttonActivateGrayscale.addEventListener("click", function() {
     } else {
           buttonActivateGrayscale.innerHTML = "C'est activé";
           buttonActivateGrayscale.setAttribute("data-gris","true");
+          // Injection du code avec filtre à l'intérieur de tabs.executeScript
           browser.tabs.executeScript({
           code:'document.body.style.filter = "grayscale(100%)";'
          });
     }
 });
-
+//FILTRE HUE
 buttonActivateHue.addEventListener("click", function() {
       console.log('activateHue');
-      if (buttonActivateHue.innerHTML == "off") {
-      buttonActivateHue.innerHTML = "on";
-      browser.tabs.executeScript({
-      code:'document.body.style.filter = "hue-rotate(90deg)";'
-     });
+      if (buttonActivateHue.getAttribute("data-bleu") == "false") {
+            buttonActivateHue.innerHTML = "C'est activé";
+            buttonActivateHue.setAttribute("data-bleu", "true");
+            browser.tabs.executeScript({
+            code:'document.body.style.filter = "hue-rotate(90deg)";'
+            });
     } else {
-      buttonActivateHue.innerHTML = "off";
-      browser.tabs.executeScript({
-      code:'document.body.style.filter = "hue-rotate(0deg)";'
-     });
+      buttonActivateHue.innerHTML = "C'est désactivé";
+      browser.tabs.reload();
+      buttonActivateHue.setAttribute("data-bleu","false");
     }
 });
-
+//FILTRE INVERT
 buttonActivateDropshadow.addEventListener("click", function() {
       console.log('activateDropshadow');
-      buttonActivateDropshadow.innerHTML = "Désactiver";
-      browser.tabs.executeScript({
-      code:'document.body.style.filter = "invert(100%)";'
-     });
+      if (buttonActivateDropshadow.getAttribute("data-rose") == "false") {
+            buttonActivateDropshadow.innerHTML = "C'est activé";
+            buttonActivateDropshadow.setAttribute("data-rose", "true");
+            browser.tabs.executeScript({
+            code:'document.body.style.filter = "invert(100%)";'
+            });
+    } else {
+      buttonActivateDropshadow.innerHTML = "C'est désactivé";
+      browser.tabs.reload();
+      buttonActivateDropshadow.setAttribute("data-rose","false");
+    }
 });
